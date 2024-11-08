@@ -1,3 +1,5 @@
+package express-calculate;
+
 public class Pilha<X> {
     private class No {
         private X dado;
@@ -13,9 +15,9 @@ public class Pilha<X> {
     private final int tamanhoInicial; 
     private int ultimo = -1; //vazio
 
-    public Pilha(int tamanhoInicial) throws PilhaException {
+    public Pilha(int tamanhoInicial) throws InvalidSizeException {
         if (tamanhoInicial <= 0)
-            throw new PilhaException("Tamanho inválido");
+            throw new InvalidSizeException("Tamanho inválido");
 
         this.tamanhoInicial = tamanhoInicial;
     }
@@ -24,12 +26,12 @@ public class Pilha<X> {
         this.tamanhoInicial = 20;
     }
 
-    public void guardeUmItem(X x) throws PilhaException {
+    public void guardeUmItem(X x) throws InvalidSizeException, FullQueueException{
         if (x == null)
-            throw new PilhaException("Falta o que guardar");
+            throw new InvalidItemException("Falta o que guardar");
 
         if (isCheia())
-            throw new PilhaException("Ops, encheu");
+            throw new FullQueueException("Ops, encheu");
 
         No novoNo = new No(x);
         novoNo.proximo = this.topo;
@@ -37,16 +39,16 @@ public class Pilha<X> {
         this.ultimo++;
     }
 
-    public X recupereUmItem() throws PilhaException {
+    public X recupereUmItem() throws EmptyQueueException {
         if (isVazia())
-            throw new PilhaException("Nada a recuperar");
+            throw new EmptyQueueException("Nada a recuperar");
 
         return this.topo.dado;
     }
 
-    public void removaUmItem() throws PilhaException {
+    public void removaUmItem() throws EmptyQueueException {
         if (isVazia())
-            throw new PilhaException("Nada a remover");
+            throw new EmptyQueueException("Nada a remover");
 
         this.topo = this.topo.proximo;
         this.ultimo--;

@@ -1,3 +1,5 @@
+package express-calculate;
+
 public class Fila<X> {
 
     private class No {
@@ -15,10 +17,10 @@ public class Fila<X> {
     private final int tamanhoInicial;  
     private int ultimo = -1;       //vazio    
     
-    public Fila(int tamanhoInicial) throws Exception 
+    public Fila(int tamanhoInicial) throws InvalidSizeException 
     {
         if (tamanhoInicial <= 0)
-            throw new Exception("Tamanho inválido");
+            throw new InvalidSizeException("Tamanho inválido");
 
         this.tamanhoInicial = tamanhoInicial;
     }
@@ -28,13 +30,13 @@ public class Fila<X> {
         this.tamanhoInicial = 20;
     }
  
-    public void guardeUmItem(X x) throws Exception  
+    public void guardeUmItem(X x) throws InvalidItemException, FullQueueException  
     {
         if (x == null)
-            throw new Exception("Falta o que guardar");
+            throw new InvalidItemException("Falta o que guardar");
 
         if (isCheia())
-            throw new Exception("Ops, encheu");
+            throw new FullQueueException("Ops, encheu");
 
         No novoNo = new No(x);
 
@@ -51,19 +53,19 @@ public class Fila<X> {
         this.ultimo++;
     }
 
-    public X recupereUmItem() throws Exception  
+    public X recupereUmItem() throws EmptyQueueException  
     {
         if (isVazia())
-            throw new Exception("Nada a recuperar");
+            throw new EmptyQueueException("Nada a recuperar");
 
         return this.elemento.dado;
     }
 
 
-    public void removaUmItem() throws Exception  
+    public void removaUmItem() throws EmptyQueueException  
     {
         if (isVazia())
-            throw new Exception("Nada a remover");
+            throw new EmptyQueueException("Nada a remover");
 
    
         this.elemento = this.elemento.proximo;
