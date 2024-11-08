@@ -1,5 +1,3 @@
-package express-calculate;
-
 public class Pilha<X> {
     private class No {
         private X dado;
