@@ -1,11 +1,12 @@
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
 class InfixToPostfixConverter {
 
   private StringTokenizer data;
-  private BufferQueue queue;
-  private BufferStack stack;
+  private BufferQueue<String> queue;
+  private BufferStack<String> stack;
 
   public InfixToPostfixConverter(StringTokenizer tokens) throws Exception {
 
@@ -14,9 +15,41 @@ class InfixToPostfixConverter {
     }
 
     this.data = tokens;
-    this.stack = new BufferStack<String>();
-    this.queue = new BufferQueue<String>();
+    this.stack = new BufferStack<>();
+    this.queue = new BufferQueue<>();
 
+  }
+
+  public void processTokens() {
+
+    boolean isparameter = false;
+
+    while (data.hasMoreTokens()) {
+      String token = data.nextToken();
+
+      try {
+
+        // ! Não quero dizer nada não, mas pelo o que eu entendi. temos que verificar se tem mais de 2 operadores dentro do () e caso realmente tenha dai sim você coloca na fila e dessa forma, você vai conseguir fazer um sucesso muito foda. foi o que ela disse
+        String[] operators = { "+", "-", "*", "/", "^", "(", ")" };
+
+        if (!Arrays.asList(operators).contains(token)) {
+          queue.guardeUmItem(token);
+        } else {
+          stack.guardeUmItem(token);
+          // ? A pergunta que não quer me calar, como CARALHOS eu vou conseguir definir o que está dentro de () e ainda por cima mesclar isso com o fato dos operadores sem dessa forma, acho que tenho que olhar para o que realmente pode entrar de acordo com aquela planilha do professor.
+          if (Arrays.asList("(", ")").contains(token)) {
+            isparameter = !isparameter;
+
+          }
+        }
+
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+    }
+
+    System.out.println(queue.toString() + "\n\n" + stack.toString());
   }
 
   public BufferQueue<String> getQueue() {
