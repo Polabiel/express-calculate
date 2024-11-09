@@ -7,6 +7,12 @@ public class BufferStack<X> {
             this.dado = dado;
             this.proximo = null;
         }
+
+        @Override
+        public String toString() {
+            return String.format("No [dado = '%s'\n%s", dado.toString(), proximo);
+        }
+
     }
 
     private No topo = null;
@@ -60,12 +66,9 @@ public class BufferStack<X> {
         return this.topo == null;
     }
 
+    @Override
     public String toString() {
-        String ret = (this.ultimo + 1) + " elemento(s)";
-
-        if (this.topo != null)
-            ret += ", sendo o topo " + this.topo.dado;
-
-        return ret;
+        return "BufferStack [" + topo + "]";
     }
+
 }

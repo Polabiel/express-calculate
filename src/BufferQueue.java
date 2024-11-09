@@ -10,6 +10,11 @@ public class BufferQueue<X> {
             this.dado = dado;
             this.proximo = null;
         }
+
+        @Override
+        public String toString() {
+            return String.format("No [dado = '%s'\n%s", dado.toString(), proximo);
+        }
     }
 
     private No elemento;
@@ -69,20 +74,17 @@ public class BufferQueue<X> {
         }
     }
 
-    public boolean isCheia() {
+    private boolean isCheia() {
         return (this.ultimo + 1) == this.tamanhoInicial;
     }
 
-    public boolean isVazia() {
+    private boolean isVazia() {
         return this.elemento == null;
     }
 
+    @Override
     public String toString() {
-        String ret = (this.ultimo + 1) + " elemento(s)";
-
-        if (this.fim != null)
-            ret += ", sendo o último " + this.fim.dado;
-
-        return ret;
+        return "BufferQueue [" + elemento + "]";
     }
+
 }
