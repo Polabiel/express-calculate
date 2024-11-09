@@ -6,12 +6,13 @@ public class CalculationTokenizer {
     }
 
     public static void main(String[] args) throws Exception {
-        String expressionInput = "45   + 7^2 * 3/76 -4 + (5   * 8)";
-        String trimmedExpression = removeWhitespaces(expressionInput);
+        // String expressionInput = "45 + 7^2 * 3/76 -4 + (5 * 8) + 1";
+        String testeString = "10 + (2 * 3- 4) ^ 2/4 + 6 * 2";
+        String trimmedExpression = removeWhitespaces(testeString);
         StringTokenizer tokenizer = new StringTokenizer(trimmedExpression, "+-*/^()", true);
 
         InfixToPostfixConverter object = new InfixToPostfixConverter(tokenizer);
 
-        System.out.println(object);
+        object.processTokens();
     }
 }
