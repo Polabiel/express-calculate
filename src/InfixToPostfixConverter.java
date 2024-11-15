@@ -48,7 +48,7 @@ class InfixToPostfixConverter {
         stack.guardeUmItem(token);
       } else if (token.equals(")")) {
         while (!stack.isVazia() && !stack.recupereUmItem().equals("(")) {
-          queue.guardeUmItem(stack.removaUmItem());
+          stack.removaUmItem();
         }
         stack.removaUmItem(); // Remove o parêntese de abertura
       } else if (isOperator(token)) {
