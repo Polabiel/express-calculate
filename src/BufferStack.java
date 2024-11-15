@@ -50,12 +50,13 @@ public class BufferStack<X> {
         return this.topo.dado;
     }
 
-    public void removaUmItem() throws Exception {
+    public X removaUmItem() throws Exception {
         if (isVazia())
             throw new Exception("Nada a remover");
 
         this.topo = this.topo.proximo;
         this.ultimo--;
+        return this.topo.dado;
     }
 
     public boolean isCheia() {
