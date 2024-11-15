@@ -20,36 +20,72 @@ class InfixToPostfixConverter {
 
   }
 
+  private int precedence(String operator) {
+    return switch (operator) {
+      case "^" -> 3;
+      case "*", "/" -> 2;
+      case "+", "-" -> 1;
+      case "(", ")" -> 0; // Parênteses não afetam diretamente a precedência
+      default -> -1;
+    };
+  }
+
+  private void handleOperator(String token) throws Exception {
+    while (!stack.isVazia() && precedence(stack.recupereUmItem()) >= precedence(token)) {
+      String top = stack.removaUmItem();
+      if (top.equals("(")) {
+        stack.guardeUmItem(top); // Não removemos '(' para não perder contexto
+        break;
+      }
+      queue.guardeUmItem(top);
+    }
+    stack.guardeUmItem(token);
+  }
+
   public void processTokens() {
-
-    boolean isparameter = false;
-
     while (data.hasMoreTokens()) {
       String token = data.nextToken();
-
       try {
-
-        // ! Não quero dizer nada não, mas pelo o que eu entendi. temos que verificar se tem mais de 2 operadores dentro do () e caso realmente tenha dai sim você coloca na fila e dessa forma, você vai conseguir fazer um sucesso muito foda. foi o que ela disse
         String[] operators = { "+", "-", "*", "/", "^", "(", ")" };
 
+        // Verifica se é um operando
         if (!Arrays.asList(operators).contains(token)) {
-          queue.guardeUmItem(token);
-        } else {
-          stack.guardeUmItem(token);
-          // ? A pergunta que não quer me calar, como CARALHOS eu vou conseguir definir o que está dentro de () e ainda por cima mesclar isso com o fato dos operadores sem dessa forma, acho que tenho que olhar para o que realmente pode entrar de acordo com aquela planilha do professor.
-          if (Arrays.asList("(", ")").contains(token)) {
-            isparameter = !isparameter;
-
+          queue.guardeUmItem(token); // Se for um operando, coloca diretamente na fila
+        }
+        // Se for um parêntese de abertura
+        else if (token.equals("(")) {
+          stack.guardeUmItem(token); // Empilha o parêntese de abertura
+        }
+        // Se for um parêntese de fechamento
+        else if (token.equals(")")) {
+          // Desempilha até encontrar o parêntese de abertura
+          while (!stack.isVazia() && !stack.recupereUmItem().equals("(")) {
+            queue.guardeUmItem(stack.removaUmItem());
           }
+          stack.removaUmItem(); // Remove o parêntese de abertura
+        }
+        // Caso seja um operador
+        else {
+          handleOperator(token); // Lida com o operador considerando a precedência
         }
 
       } catch (Exception e) {
         e.printStackTrace();
       }
-
     }
 
-    System.out.println(queue.toString() + "\n\n" + stack.toString());
+    // Esvazia a pilha restante
+    while (!stack.isVazia()) {
+      try {
+        queue.guardeUmItem(stack.removaUmItem());
+      } catch (Exception e) {
+
+      }
+    }
+
+    // Exibe a fila e a pilha final para verificação
+    System.out.println("Expressão Pós-Fixa: " + queue.toString());
+    System.out.println("Pilha Final: " + stack.toString());
   }
 
   public BufferQueue<String> getQueue() {
