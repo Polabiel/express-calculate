@@ -54,9 +54,10 @@ public class BufferStack<X> {
         if (isVazia())
             throw new Exception("Nada a remover");
 
+        X x = this.topo.dado;
         this.topo = this.topo.proximo;
         this.ultimo--;
-        return this.topo.dado;
+        return x;
     }
 
     public boolean isCheia() {
