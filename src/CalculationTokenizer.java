@@ -13,6 +13,6 @@ public class CalculationTokenizer {
 
         InfixToPostfixConverter object = new InfixToPostfixConverter(tokenizer);
 
-        object.processTokens();
+        object.convertToPostfix();
     }
 }
