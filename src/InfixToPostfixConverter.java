@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
@@ -42,50 +41,36 @@ class InfixToPostfixConverter {
     stack.guardeUmItem(token);
   }
 
-  public void processTokens() {
+  public void convertToPostfix() throws Exception {
     while (data.hasMoreTokens()) {
       String token = data.nextToken();
-      try {
-        String[] operators = { "+", "-", "*", "/", "^", "(", ")" };
-
-        // Verifica se é um operando
-        if (!Arrays.asList(operators).contains(token)) {
-          queue.guardeUmItem(token); // Se for um operando, coloca diretamente na fila
+      if (token.equals("(")) {
+        stack.guardeUmItem(token);
+      } else if (token.equals(")")) {
+        while (!stack.isVazia() && !stack.recupereUmItem().equals("(")) {
+          queue.guardeUmItem(stack.removaUmItem());
         }
-        // Se for um parêntese de abertura
-        else if (token.equals("(")) {
-          stack.guardeUmItem(token); // Empilha o parêntese de abertura
-        }
-        // Se for um parêntese de fechamento
-        else if (token.equals(")")) {
-          // Desempilha até encontrar o parêntese de abertura
-          while (!stack.isVazia() && !stack.recupereUmItem().equals("(")) {
-            queue.guardeUmItem(stack.removaUmItem());
-          }
-          stack.removaUmItem(); // Remove o parêntese de abertura
-        }
-        // Caso seja um operador
-        else {
-          handleOperator(token); // Lida com o operador considerando a precedência
-        }
-
-      } catch (Exception e) {
-        e.printStackTrace();
+        stack.removaUmItem(); // Remove o parêntese de abertura
+      } else if (isOperator(token)) {
+        handleOperator(token);
+      } else {
+        queue.guardeUmItem(token); // Se for um operando, coloca diretamente na fila
       }
     }
 
-    // Esvazia a pilha restante
+    // Desempilha todos os operadores restantes na pilha
     while (!stack.isVazia()) {
       try {
         queue.guardeUmItem(stack.removaUmItem());
       } catch (Exception e) {
-
       }
     }
 
-    // Exibe a fila e a pilha final para verificação
-    System.out.println("Expressão Pós-Fixa: " + queue.toString());
-    System.out.println("Pilha Final: " + stack.toString());
+    System.out.println(queue.toString());
+  }
+
+  private boolean isOperator(String token) {
+    return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^");
   }
 
   public BufferQueue<String> getQueue() {
