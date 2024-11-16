@@ -74,11 +74,11 @@ public class BufferQueue<X> {
         }
     }
 
-    private boolean isCheia() {
+    public boolean isCheia() {
         return (this.ultimo + 1) == this.tamanhoInicial;
     }
 
-    private boolean isVazia() {
+    public boolean isVazia() {
         return this.elemento == null;
     }
 
