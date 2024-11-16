@@ -66,7 +66,6 @@ class InfixToPostfixConverter {
       }
     }
 
-    System.out.println(queue.toString());
   }
 
   private boolean isOperator(String token) {
