@@ -9,22 +9,6 @@ class GeneratorResults {
   String op = "a";
 
   public GeneratorResults(BufferQueue<String> queue, BufferStack<String> stack) throws Exception {
-    System.out.println("inserindo variaveis");
-    queue.guardeUmItem("10");
-    queue.guardeUmItem("2");
-    queue.guardeUmItem("3");
-    queue.guardeUmItem("*");
-    queue.guardeUmItem("4");
-    queue.guardeUmItem("-");
-    queue.guardeUmItem("2");
-    queue.guardeUmItem("^");
-    queue.guardeUmItem("4");
-    queue.guardeUmItem("/");
-    queue.guardeUmItem("+");
-    queue.guardeUmItem("6");
-    queue.guardeUmItem("2");
-    queue.guardeUmItem("*");
-    queue.guardeUmItem("+");
 
     this.queue = queue;
     this.stack = stack;
