@@ -58,6 +58,9 @@ class GeneratorResults {
       System.out.println("Queue vazia, o resultado da operação é:");
       System.out.println(stack.recupereUmItem());
     }
+    else {
+      throw new Exception("Queue não está vazia"); 
+    }
   }
 
   public GeneratorResults() {
