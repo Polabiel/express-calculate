@@ -2,7 +2,7 @@ public class BufferStack<X> {
     private class No {
         private X dado;
         private No proximo;
-
+        
         public No(X dado) {
             this.dado = dado;
             this.proximo = null;
