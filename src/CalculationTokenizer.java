@@ -52,7 +52,7 @@ public class CalculationTokenizer {
         BufferQueue<String> queue = object.getQueue();
         BufferStack<String> stack = object.getStack();
 
-        GeneratorResults a = new GeneratorResults(queue, stack);
+        GeneratorResults tokenizedResults = new GeneratorResults(queue, stack);
 
     }
 }
